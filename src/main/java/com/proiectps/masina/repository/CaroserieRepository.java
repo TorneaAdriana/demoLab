@@ -1,10 +1,10 @@
 package com.proiectps.masina.repository;
 
-import com.proiectps.masina.model.Masina;
+
+import com.proiectps.masina.model.Caroserie;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface MasinaRepository extends CrudRepository<Masina, Long> {
-    Masina findFirstByMarca(String marca);
+public interface CaroserieRepository extends CrudRepository<Caroserie,Long> {
 }
