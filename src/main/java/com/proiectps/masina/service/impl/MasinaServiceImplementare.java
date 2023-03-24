@@ -7,6 +7,8 @@ import com.proiectps.masina.service.MasinaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class MasinaServiceImplementare implements MasinaService {
 
@@ -29,5 +31,35 @@ public class MasinaServiceImplementare implements MasinaService {
         masinaRepository.save(updateMasina);
 
         return updateMasina;
+    }
+
+    @Override
+    public Masina findAllByMarca(String marca){
+        return masinaRepository.findAllByMarca(marca);
+    }
+
+    @Override
+    public List<Masina> findAll() {
+        List<Masina> masini=(List<Masina>)masinaRepository.findAll();
+        return masini;
+    }
+
+    @Override
+    public Masina findById(Long id) {
+        return masinaRepository.findById(id).get();
+    }
+
+    @Override
+    public Masina findFirstByIdAndMarca(Long id, String marca) {
+        Masina masina = masinaRepository.findFirstByIdAndMarca(id,marca);
+
+        return masina;
+    }
+
+    @Override
+    public Masina deleteMasina(Long id) {
+        Masina masina=masinaRepository.findById(id).get();
+        masinaRepository.delete(masina);
+        return masina;
     }
 }

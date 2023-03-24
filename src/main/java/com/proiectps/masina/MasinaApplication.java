@@ -16,7 +16,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @EntityScan
 @EnableJpaRepositories
@@ -70,6 +72,8 @@ public class MasinaApplication {
 			masina.setUser(user);
 			masinaRepository.save(masina);
 
+
+			System.out.println(masinaService.findAllByMarca("Logan").getMarca());
 
 		};
 		}
