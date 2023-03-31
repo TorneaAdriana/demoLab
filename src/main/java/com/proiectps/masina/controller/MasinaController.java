@@ -1,5 +1,6 @@
 package com.proiectps.masina.controller;
 
+import com.proiectps.masina.DTO.MasinaDTO;
 import com.proiectps.masina.model.Masina;
 import com.proiectps.masina.service.MasinaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,12 @@ public class MasinaController {
         return ResponseEntity.status(HttpStatus.OK).body(masinaService.findByMarca(marca));
     }
 
+    @GetMapping("/find/{marca}")
+    public Masina findCarByMarca1(@PathVariable String marca) {
+        System.out.println(masinaService.findAllByMarca(marca).getMarca());
+        return masinaService.findByMarca(marca);
+    }
+
     @GetMapping("/find")
     public ResponseEntity findByMarcaReqParam(@RequestParam String marca) {
         return ResponseEntity.status(HttpStatus.OK).body(masinaService.findByMarca(marca));
@@ -33,5 +40,16 @@ public class MasinaController {
     @DeleteMapping("/{id}")
     public Masina deleteMasinaById(@PathVariable Long id){
         return  masinaService.deleteMasina(id);
+    }
+
+    @PutMapping("/update")
+    public Masina updateMasina(@RequestBody MasinaDTO dto){
+        return  masinaService.updateMasina(dto);
+    }
+
+    @RequestMapping(value="/findById",method = RequestMethod.GET)
+    public MasinaDTO findById(@RequestParam Long id)
+    {
+        return masinaService.findByIdDTO(id);
     }
 }

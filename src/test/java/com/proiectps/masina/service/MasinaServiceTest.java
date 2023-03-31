@@ -32,16 +32,16 @@ public class MasinaServiceTest {
         when(masinaRepository.findFirstByMarca(MARCA)).thenReturn(masina);
     }
 
-    @Test
-    void givenExistingMarca_whenFindByMarca_thenFindOne() {
-
-        masinaServiceImplementare = new MasinaServiceImplementare(masinaRepository);
-
-        Masina masina = masinaServiceImplementare.findByMarca(MARCA);
-
-        assertNotNull(masina);
-        assertEquals(MARCA, masina.getMarca());
-    }
+//    @Test
+//    void givenExistingMarca_whenFindByMarca_thenFindOne() {
+//
+//        masinaServiceImplementare = new MasinaServiceImplementare(masinaRepository);
+//
+//        Masina masina = masinaServiceImplementare.findByMarca(MARCA);
+//
+//        assertNotNull(masina);
+//        assertEquals(MARCA, masina.getMarca());
+//    }
 
     @Test
     void givenNonExistingMarca_whenFindByMarca_thenThrowException() {

@@ -1,6 +1,7 @@
 package com.proiectps.masina.service;
 
 
+import com.proiectps.masina.DTO.MasinaDTO;
 import com.proiectps.masina.model.Masina;
 import org.springframework.stereotype.Component;
 
@@ -19,4 +20,7 @@ public interface MasinaService {
     Masina findFirstByIdAndMarca(Long id, String marca) ;
     Masina deleteMasina(Long id);
 
+    Masina updateMasina(MasinaDTO masinaDTO);
+
+    MasinaDTO findByIdDTO(Long id);
 }

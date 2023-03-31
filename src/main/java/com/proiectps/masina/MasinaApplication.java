@@ -16,66 +16,64 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 @EntityScan
 @EnableJpaRepositories
 @SpringBootApplication
 public class MasinaApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(MasinaApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(MasinaApplication.class, args);
+    }
 
-	@Bean
-	CommandLineRunner init(MasinaRepository masinaRepository, UserRepository userRepository, ComponentaRepository componentaRepository, CaroserieRepository caroserieRepository,
-						   MasinaService masinaService) {
-		return args -> {
+    @Bean
+    CommandLineRunner init(MasinaRepository masinaRepository, UserRepository userRepository, ComponentaRepository componentaRepository, CaroserieRepository caroserieRepository,
+                           MasinaService masinaService) {
+        return args -> {
 
-			Masina masina = new Masina();
-			masina.setMarca("Logan");
+            Masina masina = new Masina();
+            masina.setMarca("Logan");
 
-			masinaRepository.save(masina);
+            masinaRepository.save(masina);
 
-			System.out.println(masinaService.findByMarca("Logan").getMarca());
+            System.out.println(masinaService.findByMarca("Logan").getMarca());
 
-			Caroserie caroserie = new Caroserie();
-			caroserie.setCuloare("ROSU");
+            Caroserie caroserie = new Caroserie();
+            caroserie.setCuloare("ROSU");
 
-			caroserieRepository.save(caroserie);
-
-
-			componentaRepository.findAll().forEach(
-					componenta -> {
-
-						System.out.println("Id: " + componenta.getId() + " Culoarea: " + ((Caroserie) componenta).getCuloare());
-
-					}
-			);
-			Masina masina1 = new Masina();
-			masina1.setMarca("Audi");
-			masina1.setPret(400);
+            caroserieRepository.save(caroserie);
 
 
-			List<Masina> masinaList = new ArrayList<>();
-			masinaList.add(masina1);
+            componentaRepository.findAll().forEach(
+                    componenta -> {
 
-			User user = new User();
-			user.setName("User1");
-			user.setId(1L);
+                        System.out.println("Id: " + componenta.getId() + " Culoarea: " + ((Caroserie) componenta).getCuloare());
 
-			user.setMasinaList(masinaList);
-			userRepository.save(user);
-
-			masina.setUser(user);
-			masinaRepository.save(masina);
+                    }
+            );
+            Masina masina1 = new Masina();
+            masina1.setMarca("Audi");
+            masina1.setPret(400);
 
 
-			System.out.println(masinaService.findAllByMarca("Logan").getMarca());
+            List<Masina> masinaList = new ArrayList<>();
+            masinaList.add(masina1);
 
-		};
-		}
+            User user = new User();
+            user.setName("User1");
+            user.setId(1L);
+
+            user.setMasinaList(masinaList);
+            userRepository.save(user);
+
+            masina.setUser(user);
+            masinaRepository.save(masina);
+
+
+            System.out.println(masinaService.findAllByMarca("Logan").getMarca());
+
+        };
+    }
 
 }
