@@ -1,6 +1,7 @@
 package com.proiectps.masina.service;
 
 
+import com.proiectps.masina.DTO.MasinaDTO;
 import com.proiectps.masina.model.Masina;
 import com.proiectps.masina.repository.MasinaRepository;
 import com.proiectps.masina.service.impl.MasinaServiceImplementare;
@@ -24,12 +25,14 @@ public class MasinaServiceTest {
 
     private Masina masina;
 
+    private MasinaDTO masinaDTO;
+
     @BeforeEach
     void init() {
         initMocks(this);
         masina = new Masina();
         masina.setMarca(MARCA);
-        when(masinaRepository.findFirstByMarca(MARCA)).thenReturn(masina);
+        when(masinaRepository.findFirstByMarca(MARCA)).thenReturn(masinaDTO);
     }
 
 //    @Test

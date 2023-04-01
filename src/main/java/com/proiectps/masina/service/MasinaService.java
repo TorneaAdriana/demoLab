@@ -10,12 +10,12 @@ import java.util.List;
 @Component
 public interface MasinaService {
 
-    Masina findByMarca(String marca);
+    MasinaDTO findByMarca(String marca);
     Masina updateMasina(Masina masina);
 
     Masina findAllByMarca(String marca);
 
-    List<Masina> findAll();
+    List<MasinaDTO> findAll();
     Masina findById(Long id);
     Masina findFirstByIdAndMarca(Long id, String marca) ;
     Masina deleteMasina(Long id);

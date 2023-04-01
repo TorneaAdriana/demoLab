@@ -13,18 +13,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class MasinaServiceImplementare implements MasinaService {
 
-    @Autowired
-    private MasinaRepository masinaRepository;
+
+    private final MasinaRepository masinaRepository;
 
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private MasinaMapper masinaMapper;
+
+    private final MasinaMapper masinaMapper;
 
     public MasinaServiceImplementare(MasinaRepository masinaRepository, UserRepository userRepository, MasinaMapper masinaMapper) {
         this.masinaRepository = masinaRepository;
@@ -33,8 +34,14 @@ public class MasinaServiceImplementare implements MasinaService {
     }
 
     @Override
-    public Masina findByMarca(String marca) {
-        return masinaRepository.findFirstByMarca(marca);
+    public MasinaDTO findByMarca(String marca) {
+        final Masina masina = masinaRepository.findByMarca(marca)
+                .orElseThrow(()
+                        -> {
+                    throw new EntityNotFoundException("Can not find book ");
+                });
+
+        return MasinaMapper.mapModelToDto(masina);
     }
 
     @Override
@@ -47,14 +54,16 @@ public class MasinaServiceImplementare implements MasinaService {
     }
 
     @Override
-    public Masina findAllByMarca(String marca){
+    public Masina findAllByMarca(String marca) {
         return masinaRepository.findAllByMarca(marca);
     }
 
     @Override
-    public List<Masina> findAll() {
-        List<Masina> masini=(List<Masina>)masinaRepository.findAll();
-        return masini;
+    public List<MasinaDTO> findAll() {
+        return masinaRepository.findAll()
+                .stream().map(
+                        MasinaMapper::mapModelToDto
+                ).collect(Collectors.toList());
     }
 
     @Override
@@ -64,14 +73,14 @@ public class MasinaServiceImplementare implements MasinaService {
 
     @Override
     public Masina findFirstByIdAndMarca(Long id, String marca) {
-        Masina masina = masinaRepository.findFirstByIdAndMarca(id,marca);
+        Masina masina = masinaRepository.findFirstByIdAndMarca(id, marca);
 
         return masina;
     }
 
     @Override
     public Masina deleteMasina(Long id) {
-        Masina masina=masinaRepository.findById(id).get();
+        Masina masina = masinaRepository.findById(id).get();
         masinaRepository.delete(masina);
         return masina;
     }
@@ -79,8 +88,8 @@ public class MasinaServiceImplementare implements MasinaService {
     @Override
     public Masina updateMasina(MasinaDTO masinaDTO) {
 
-        Masina masina=masinaRepository.findById(masinaDTO.getId()).get();
-        User user=userRepository.findById(masinaDTO.getId()).get();
+        Masina masina = masinaRepository.findById(masinaDTO.getId()).get();
+        User user = userRepository.findById(masinaDTO.getId()).get();
         user.getMasinaList().add(masina);
 
         return masinaRepository.save(masina);
@@ -88,11 +97,11 @@ public class MasinaServiceImplementare implements MasinaService {
 
     @Override
     public MasinaDTO findByIdDTO(Long id) {
-        final Masina masina=masinaRepository.findById(id)
+        final Masina masina = masinaRepository.findById(id)
                 .orElseThrow(()
                         ->
                 {
-                    throw new EntityNotFoundException("Nu se poate gasi masina cu Id-ul:"+id);
+                    throw new EntityNotFoundException("Nu se poate gasi masina cu Id-ul:" + id);
                 });
 
         return masinaMapper.mapModelToDto(masina);

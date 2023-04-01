@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/car")
 public class MasinaController {
@@ -17,8 +19,8 @@ public class MasinaController {
 
 
     @GetMapping()
-    public ResponseEntity findAllCars(){
-        return ResponseEntity.status(HttpStatus.OK).body(masinaService.findAll());
+    public List<MasinaDTO> findAllCars() {
+        return masinaService.findAll();
     }
 
     @GetMapping("/{marca}")
@@ -27,7 +29,7 @@ public class MasinaController {
     }
 
     @GetMapping("/find/{marca}")
-    public Masina findCarByMarca1(@PathVariable String marca) {
+    public MasinaDTO findCarByMarca1(@PathVariable String marca) {
         System.out.println(masinaService.findAllByMarca(marca).getMarca());
         return masinaService.findByMarca(marca);
     }
@@ -38,18 +40,17 @@ public class MasinaController {
     }
 
     @DeleteMapping("/{id}")
-    public Masina deleteMasinaById(@PathVariable Long id){
-        return  masinaService.deleteMasina(id);
+    public Masina deleteMasinaById(@PathVariable Long id) {
+        return masinaService.deleteMasina(id);
     }
 
     @PutMapping("/update")
-    public Masina updateMasina(@RequestBody MasinaDTO dto){
-        return  masinaService.updateMasina(dto);
+    public Masina updateMasina(@RequestBody MasinaDTO dto) {
+        return masinaService.updateMasina(dto);
     }
 
-    @RequestMapping(value="/findById",method = RequestMethod.GET)
-    public MasinaDTO findById(@RequestParam Long id)
-    {
+    @RequestMapping(value = "/findById", method = RequestMethod.GET)
+    public MasinaDTO findById(@RequestParam Long id) {
         return masinaService.findByIdDTO(id);
     }
 }
