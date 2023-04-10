@@ -8,6 +8,7 @@ import com.proiectps.masina.service.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -52,5 +53,36 @@ public class UserServiceImplementare implements UserService {
                         ->
                         new IllegalArgumentException("Id invalid"));
         return userMapper.mapModelToDto(user);
+    }
+
+    @Override
+    public UserDTO login(String username, String password) {
+        try {
+            UserDTO user1 = userMapper.mapModelToDto(userRepository.findByUsername(username));
+            System.out.println("User 1" + user1.getUsername());
+
+
+            System.out.println(username + password);
+
+            if (user1.getUsername().equals(username) && user1.getPassword().equals(password)) {
+                return user1;
+            }
+
+
+            final User user = userRepository.findByUsernameAndPassword(username, password)
+                    .<EntityNotFoundException>orElseThrow(()
+                            ->
+                    {
+                        throw new EntityNotFoundException("Cannot find");
+
+                    });
+
+            //  return userMapper.toDTO(user);
+
+        } catch (Exception e) {
+
+            System.out.println(e.getMessage());
+        }
+        return null;
     }
 }

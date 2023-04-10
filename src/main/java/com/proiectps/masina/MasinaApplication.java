@@ -1,5 +1,6 @@
 package com.proiectps.masina;
 
+import com.proiectps.masina.ENUM.UserRole;
 import com.proiectps.masina.model.Caroserie;
 import com.proiectps.masina.model.Masina;
 import com.proiectps.masina.model.User;
@@ -63,6 +64,9 @@ public class MasinaApplication {
             User user = new User();
             user.setName("User1");
             user.setId(1L);
+            user.setUsername("andrei");
+            user.setPassword("123");
+            user.setUserRole(UserRole.CLIENT);
 
             user.setMasinaList(masinaList);
             userRepository.save(user);
